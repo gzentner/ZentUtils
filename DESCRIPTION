@@ -1,0 +1,23 @@
+Package: ZentUtils
+Title: Miscellaneous Tools for Sequence Analysis
+Version: 0.1
+Authors@R: 
+    person(given = "Gabe",
+           family = "Zentner",
+           role = c("aut", "cre"),
+           email = "gzentner@gmail.com",
+           comment = c(ORCID = "0000-0002-0801-7646"))
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    Biostrings,
+    BSgenome,
+    GenomeInfoDb,
+    rtracklayer,
+    plyranges
+Depends: 
+    tidyverse
