@@ -4,13 +4,13 @@
 \alias{get_seqs}
 \title{Retrieve sequences corresponding to ranges of interest}
 \usage{
-get_seqs(zu_obj, region_type = "imported", genome)
+get_seqs(zu_obj, region_type = "expanded", genome)
 }
 \arguments{
 \item{zu_obj}{A ZentTools object}
 
 \item{region_type}{Whether to extract sequences from original regions
-("imported") or expanded regions ("exported")}
+("imported") or expanded regions ("expanded")}
 
 \item{genome}{A BSgenome object for the organism of interest}
 }
@@ -22,5 +22,5 @@ Retrieve sequences corresponding to ranges of interest
 }
 \examples{
 saccer3 <- BSgenome.Scerevisiae.UCSC.sacCer3
-get_seq(zu_obj, genome = saccer3)
+reb1 <- get_seq(reb1, region_type = "expanded", genome = saccer3)
 }

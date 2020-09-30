@@ -18,9 +18,13 @@ Imports:
     BSgenome,
     GenomeInfoDb,
     rtracklayer,
-    plyranges,
+    valr,
     ggplot2,
     dplyr,
     tidyr,
-    stringr
-Depends: 
+    stringr,
+    GenomicRanges,
+    BiocGenerics,
+    methods,
+    magrittr,
+    tibble

@@ -21,12 +21,15 @@ setClass(
 
 #' ZentUtils constructor function
 #'
+#' @import methods
+#'
 #' @param data A BED file containing the regions of interest
 #'
 #' @return A ZentUtils object
 #' @export
 #'
-#' @examples zentutils("~/CTCF_peaks.bed")
+#' @examples
+#' reb1 <- zentutils(system.file("extdata", "reb1_motifs.bed", package = "ZentUtils"))
 
 zentutils <- function(data) {
 
