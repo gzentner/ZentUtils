@@ -56,6 +56,8 @@ get_seqs <- function(zu_obj,
 
 #' Generate sequence color map
 #'
+#' @importFrom ggplot2 ggplot aes geom_tile scale_fill_manual theme
+#'
 #' @param zu_obj A ZentUtils object
 #' @param cols Colors to use for base representation. Use NA for default colors
 #'             or provide a character vector of length 4.
@@ -102,8 +104,8 @@ color_map <- function(zu_obj,
   )
 
   # Generate color plot
-  ggplot2::ggplot(seqs_split, aes(x = position, y = sequence)) +
-    geom_tile(aes(fill = base)) +
+  p <- ggplot(seqs_split, aes(x = .data$position, y = .data$sequence)) +
+    geom_tile(aes(fill = .data$base)) +
     theme_minimal() +
     scale_fill_manual(values = base_cols) +
     theme(
@@ -111,5 +113,7 @@ color_map <- function(zu_obj,
       axis.title = element_blank(),
       panel.grid = element_blank()
     )
+
+  return(p)
 
 }
