@@ -18,6 +18,9 @@ Imports:
     BSgenome,
     GenomeInfoDb,
     rtracklayer,
-    plyranges
+    plyranges,
+    ggplot2,
+    dplyr,
+    tidyr,
+    stringr
 Depends: 
-    tidyverse
