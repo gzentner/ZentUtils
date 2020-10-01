@@ -24,12 +24,14 @@ expand_regions <- function(zu_obj,
                            strand = TRUE,
                            trim = TRUE) {
   # Input checks
-  if (!is(zu_obj, "zu_obj"))
+  if (!is(zu_obj, "zu_obj")) {
     stop("input must be a ZentUtils object")
+  }
 
   # Make both and left/right mutually exclusive
-  if (both != 0 & left != 0 | right != 0)
+  if (both != 0 & left != 0 | right != 0) {
     stop("Specify a value only for 'both' or 'left' and/or 'right'")
+  }
 
   # Check chromosome style - must be UCSC (with the "chr" prefix) to be
   # compatible with valr and BSgenome.
@@ -106,11 +108,13 @@ get_seqs <- function(zu_obj,
                      genome) {
 
   # Input checks
-  if (!is(zu_obj, "zu_obj"))
+  if (!is(zu_obj, "zu_obj")) {
     stop("input must be a ZentUtils object")
+  }
 
-  if(region_type != "imported" | "expanded")
+  if(region_type != "imported" | region_type != "expanded") {
     stop("region_type must be 'imported' or 'expanded'")
+  }
 
   if (region_type == "imported") {
     seq_regions <- zu_obj@regions
@@ -158,20 +162,20 @@ color_map <- function(zu_obj,
     as.character %>%
     stringr::str_split(pattern = "", simplify = T) %>%
     as.data.frame %>%
-    stats::setNames(1:seq_length) %>%
+    magrittr::set_names(1:seq_length) %>%
     tibble::rowid_to_column(var = "sequence") %>%
-    tidyr::pivot_longer(-sequence, names_to = "position", values_to = "base") %>%
-    dplyr::mutate_at(vars(position), ~ as.integer(.))
+    tidyr::pivot_longer(!sequence, names_to = "position", values_to = "base") %>%
+    dplyr::mutate(position = as.integer(position))
 
-  ifelse(
+  base_cols <- ifelse(
     is.na(cols),
-    base_cols <- c(
+    c(
       "A" = "#109649",
       "C" = "#255C99",
       "G" = "#F7B32C",
       "T" = "#D62839"
     ),
-    base_cols <- c(
+    c(
       "A" = cols[1],
       "C" = cols[2],
       "G" = cols[3],
@@ -180,8 +184,8 @@ color_map <- function(zu_obj,
   )
 
   # Generate color plot
-  p <-
-    ggplot(seqs_split, aes(x = .data$position, y = .data$sequence)) +
+  p <- seqs_split %>%
+    ggplot(aes(x = .data$position, y = .data$sequence)) +
     geom_tile(aes(fill = .data$base)) +
     theme_minimal() +
     scale_fill_manual(values = base_cols) +
