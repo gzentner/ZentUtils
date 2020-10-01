@@ -18,7 +18,6 @@ setClass(
     )
 )
 
-
 #' ZentUtils constructor function
 #'
 #' @import methods
@@ -29,13 +28,14 @@ setClass(
 #' @export
 #'
 #' @examples
-#' zent <- zentutils(system.file("extdata", "reb1_motifs.bed", package = "ZentUtils"))
+#' zent <- zentutils(system.file("extdata", "homer_reb1_badis_motif_scan.bed", package = "ZentUtils"))
 
 zentutils <- function(data) {
 
   zu_obj <- new(
     "zu_obj",
-    regions = read_tsv(data) %>%
+    regions = readr::read_tsv(data, col_names = c("chrom", "start", "end",
+                                                  "region_name", "score", "strand")) %>%
       GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
 
   )

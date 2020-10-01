@@ -27,4 +27,5 @@ Imports:
     methods,
     tibble,
     GenomicRanges,
-    BiocGenerics
+    BiocGenerics,
+    readr
