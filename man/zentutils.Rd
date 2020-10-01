@@ -16,5 +16,5 @@ A ZentUtils object
 ZentUtils constructor function
 }
 \examples{
-zentutils("~/CTCF_peaks.bed")
+zent <- zentutils(system.file("extdata", "reb1_motifs.bed", package = "ZentUtils"))
 }

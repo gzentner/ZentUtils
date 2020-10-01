@@ -21,19 +21,27 @@ setClass(
 
 #' ZentUtils constructor function
 #'
+#' @import methods
+#'
 #' @param data A BED file containing the regions of interest
 #'
 #' @return A ZentUtils object
 #' @export
 #'
-#' @examples zentutils("~/CTCF_peaks.bed")
+#' @examples
+#' zent <- zentutils(system.file("extdata", "reb1_motifs.bed", package = "ZentUtils"))
 
 zentutils <- function(data) {
 
   zu_obj <- new(
     "zu_obj",
-    regions = rtracklayer::import(data)
+    regions = read_tsv(data) %>%
+      GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
+
   )
+
+  if (GenomeInfoDb::seqlevelsStyle(GenomeInfoDb::seqlevels(zu_obj@regions))[1] != "UCSC") {
+      GenomeInfoDb::seqlevelsStyle(GenomeInfoDb::seqlevels(zu_obj@regions)) <- "UCSC" }
 
   return(zu_obj)
 }

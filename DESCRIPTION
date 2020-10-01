@@ -22,5 +22,9 @@ Imports:
     ggplot2,
     dplyr,
     tidyr,
-    stringr
-Depends: 
+    stringr,
+    magrittr,
+    methods,
+    tibble,
+    GenomicRanges,
+    BiocGenerics

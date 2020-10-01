@@ -1,29 +1,49 @@
 
-#' Expand peak summits to a desired width
+#' Expand regions to a desired width
+#'
+#' @importFrom GenomeInfoDb seqlengths
 #'
 #' @param zu_obj A ZentUtils object
-#' @param length Number of bases to expand the summit
+#' @param genome A BSgenome object for the organism of interest
+#' @param length Number of bases to expand the region
 #'
-#' @return A GRanges object in slot 'regions' (overwrites original regions)
+#' @return A GRanges object in slot 'expanded_regions'
 #' @export
 #'
-#' @examples expand_summits(zu_obj, length = 100)
+#' @examples
+#' genome <- BSgenome.Scerevisiae.UCSC.sacCer3
+#' zent <- expand_regions(zent, genome, 100)
 
-expand_summits <- function(zu_obj, length = 100) {
-
-  # Check chromosome style - must be UCSC (with the "chr" prefix) to be
-  # compatible with BSgenome.
-  if (GenomeInfoDb::seqlevelsStyle(GenomeInfoDb::seqlevels(zu_obj@regions))[1] != "UCSC") {
-      GenomeInfoDb::seqlevelsStyle(GenomeInfoDb::seqlevels(zu_obj@regions)) <- "UCSC" }
+expand_regions <- function(zu_obj, genome, length = 100) {
 
   # Expand regions. Note that 1 is subtracted from 'length' to account for
   # 0-based coordinates
+
   zu_obj@expanded_regions <- plyranges::stretch(zu_obj@regions, length - 1)
+
+  # Ensure that seqnames are in the proper order
+  zu_obj@expanded_regions <- GenomeInfoDb::sortSeqlevels(zu_obj@expanded_regions)
+
+  # Set seqlengths to enable trimming
+  seqlengths_df <- as.data.frame(GenomeInfoDb::seqlengths(genome)) %>%
+    tibble::rownames_to_column("seqname") %>%
+    dplyr::filter(seqname != "chrM")
+
+  suppressWarnings(GenomeInfoDb::seqlengths(zu_obj@expanded_regions) <- seqlengths_df[,2])
+
+  # Trim out-of-bounds regions
+  zu_obj@expanded_regions <- GenomicRanges::trim(zu_obj@expanded_regions)
+
+  # Drop sequences under the maximum width due to trimming
+  zu_obj@expanded_regions <- zu_obj@expanded_regions[BiocGenerics::width(zu_obj@expanded_regions) ==
+                                                     max(BiocGenerics::width(zu_obj@expanded_regions))]
+
+  dropped_seq_n <- length(zu_obj@regions) - length(zu_obj@expanded_regions)
+
+  print(paste(dropped_seq_n, "sequences were removed due to being out-of-bounds."), quote = F)
 
   return(zu_obj)
 }
-
-####
 
 #' Retrieve sequences corresponding to ranges of interest
 #'
@@ -36,11 +56,11 @@ expand_summits <- function(zu_obj, length = 100) {
 #' @export
 #'
 #' @examples
-#' saccer3 <- BSgenome.Scerevisiae.UCSC.sacCer3
-#' get_seq(zu_obj, genome = saccer3)
+#' genome <- BSgenome.Scerevisiae.UCSC.sacCer3
+#' zent <- get_seqs(zent, region_type = "expanded", genome = genome)
 
 get_seqs <- function(zu_obj,
-                     region_type = "imported",
+                     region_type = "expanded",
                      genome) {
 
   if(region_type == "imported") {seq_regions <- zu_obj@regions}
@@ -48,7 +68,7 @@ get_seqs <- function(zu_obj,
 
   zu_obj@seqs <- BSgenome::getSeq(genome, seq_regions)
 
-  names(zu_obj@seqs) <- seq_regions$name
+  #names(zu_obj@seqs) <- seq(1:length(zent@seqs))
 
   return(zu_obj)
 
@@ -56,7 +76,9 @@ get_seqs <- function(zu_obj,
 
 #' Generate sequence color map
 #'
-#' @importFrom ggplot2 ggplot aes geom_tile scale_fill_manual theme
+#' @importFrom ggplot2 ggplot aes geom_tile scale_fill_manual theme theme_minimal element_blank
+#' @importFrom magrittr %>%
+#' @importFrom stats setNames
 #'
 #' @param zu_obj A ZentUtils object
 #' @param cols Colors to use for base representation. Use NA for default colors
@@ -65,7 +87,8 @@ get_seqs <- function(zu_obj,
 #' @return A sequence color map
 #' @export
 #'
-#' @examples color_map(zu_obj, cols = c("green", "blue", "yellow", "red"))
+#' @examples
+#' color_map(zent, cols = c("green", "blue", "yellow", "red"))
 
 color_map <- function(zu_obj,
                       cols = NA) {
@@ -85,7 +108,8 @@ color_map <- function(zu_obj,
     as.data.frame %>%
     setNames(1:seq_length) %>%
     tibble::rowid_to_column(var = "sequence") %>%
-    tidyr::pivot_longer(-sequence, names_to = "position", values_to = "base")
+    tidyr::pivot_longer(-sequence, names_to = "position", values_to = "base") %>%
+    dplyr::mutate_at(vars(position), ~ as.integer(.))
 
   ifelse(
     is.na(cols),

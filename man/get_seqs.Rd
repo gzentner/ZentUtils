@@ -4,7 +4,7 @@
 \alias{get_seqs}
 \title{Retrieve sequences corresponding to ranges of interest}
 \usage{
-get_seqs(zu_obj, region_type = "imported", genome)
+get_seqs(zu_obj, region_type = "expanded", genome)
 }
 \arguments{
 \item{zu_obj}{A ZentTools object}
@@ -21,6 +21,6 @@ A DNAStringSet object in slot 'seqs'
 Retrieve sequences corresponding to ranges of interest
 }
 \examples{
-saccer3 <- BSgenome.Scerevisiae.UCSC.sacCer3
-get_seq(zu_obj, genome = saccer3)
+genome <- BSgenome.Scerevisiae.UCSC.sacCer3
+zent <- get_seqs(zent, region_type = "expanded", genome = genome)
 }

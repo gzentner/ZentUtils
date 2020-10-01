@@ -19,5 +19,5 @@ A sequence color map
 Generate sequence color map
 }
 \examples{
-color_map(zu_obj, cols = c("green", "blue", "yellow", "red"))
+color_map(zent, cols = c("green", "blue", "yellow", "red"))
 }
