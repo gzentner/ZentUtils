@@ -10,10 +10,10 @@ ZentUtils class definition
 \section{Slots}{
 
 \describe{
-\item{\code{regions}}{A GRanges object containing imported regions}
+\item{\code{regions}}{A GRanges object containing imported regions.}
 
-\item{\code{expanded_regions}}{A GRanges object containing expanded regions}
+\item{\code{expanded_regions}}{A GRanges object containing expanded regions.}
 
-\item{\code{seqs}}{A DNAStringSet object containing sequences of regions of interest}
+\item{\code{seqs}}{A DNAStringSet object containing sequences of regions of interest.}
 }}
 

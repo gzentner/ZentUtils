@@ -2,19 +2,31 @@
 % Please edit documentation in R/zu_obj.R
 \name{zentutils}
 \alias{zentutils}
-\title{ZentUtils constructor function}
+\title{ZentUtils Constructor Function}
 \usage{
-zentutils(data)
+zentutils(data, genome = NA)
 }
 \arguments{
-\item{data}{A BED file containing the regions of interest}
+\item{data}{A BED file containing the regions of interest.}
+
+\item{genome}{Identifier for the genome from which the regions were derived.}
 }
 \value{
-A ZentUtils object
+A new ZentUtils object with a GRanges object in the 'regions' slot.
 }
 \description{
-ZentUtils constructor function
+Creates a new ZentUtils object that stores a GRanges object generated from
+an imported BED file.
+}
+\details{
+\itemize{
+\item{The BED file should contain 6 columns, with chromosome, start, and
+end coordinates in columns 1-3 and strand in column 6.}
+\item{BED columns names are converted to "chrom", "start", "end",
+"region_name", "score", and "strand" upon import.}
+}
 }
 \examples{
-zent <- zentutils(system.file("extdata", "reb1_motifs.bed", package = "ZentUtils"))
+zent <- zentutils(system.file("extdata", "homer_reb1_badis_motif_scan.bed", package = "ZentUtils"),
+                  genome = "sacCer3")
 }

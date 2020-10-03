@@ -3,6 +3,7 @@
 export(color_map)
 export(expand_regions)
 export(get_seqs)
+export(sort_regions)
 export(zentutils)
 exportClasses(zu_obj)
 import(methods)

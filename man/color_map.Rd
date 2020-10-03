@@ -2,7 +2,7 @@
 % Please edit documentation in R/sequence_color_map.R
 \name{color_map}
 \alias{color_map}
-\title{Generate sequence color map}
+\title{Color Map}
 \usage{
 color_map(zu_obj, cols = NA)
 }
@@ -16,7 +16,8 @@ or provide a character vector of length 4.}
 A sequence color map
 }
 \description{
-Generate sequence color map
+Generates a tile plot of sequences of interest wherein each base is represented
+by a specific color.
 }
 \examples{
 color_map(zent, cols = c("green", "blue", "yellow", "red"))
