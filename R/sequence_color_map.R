@@ -7,7 +7,6 @@
 #'
 #' @importFrom ggplot2 ggplot aes geom_tile scale_fill_manual theme theme_minimal element_blank
 #' @importFrom magrittr %>%
-#' @importFrom stats setNames
 #'
 #' @param zu_obj A ZentUtils object
 #' @param cols Colors to use for base representation. Use NA for default colors
