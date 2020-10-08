@@ -1,5 +1,10 @@
 ## ZentUtils
 
+<<<<<<< HEAD
+=======
+---
+
+>>>>>>> c4987e96dd5894730bcfaca0c86df17bb50b4227
 #### About
 ZentUtils is a collection of functions designed to streamline analysis of genomic
 intervals.
@@ -18,18 +23,30 @@ transcription factor.
 
 ##### Import regions into ZentUtils
 
+<<<<<<< HEAD
 ```R
+=======
+```
+>>>>>>> c4987e96dd5894730bcfaca0c86df17bb50b4227
 zent <- zentutils(system.file("extdata", "homer_reb1_badis_motif_scan.bed", package = "ZentUtils"), genome = "sacCer3")
 ```
 
 ##### Sort regions
 
+<<<<<<< HEAD
 ```R
+=======
+```
+>>>>>>> c4987e96dd5894730bcfaca0c86df17bb50b4227
 zent <- sort_regions(zent, by = "score", decreasing = TRUE)
 ```
 
 ##### Expand regions
 
+<<<<<<< HEAD
 ```R
+=======
+```
+>>>>>>> c4987e96dd5894730bcfaca0c86df17bb50b4227
 zent <- expand_regions(zent, length = 50)
 ```
