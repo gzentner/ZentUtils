@@ -63,4 +63,8 @@ around features of interest.
 color_map(zent)
 ```
 
+<p align="center">
+  <img src="https://github.com/gzentner/ZentUtils/blob/master/inst/images/reb1_motif_colormap.png" />
+</p>
+
 ![Reb1 motif match color map](https://github.com/gzentner/ZentUtils/blob/master/inst/images/reb1_motif_colormap.png)
