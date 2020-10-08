@@ -20,9 +20,16 @@ transcription factor.
 
 ##### Import regions into ZentUtils
 
-```R
+```{r}
 zent <- zentutils(system.file("extdata", "homer_reb1_badis_motif_scan.bed", package = "ZentUtils"), genome = "sacCer3")
+
+head(zent@regions)
 ```
+
+```{r}
+
+```
+
 
 ##### Sort regions
 
@@ -35,3 +42,4 @@ zent <- sort_regions(zent, by = "score", decreasing = TRUE)
 ```R
 zent <- expand_regions(zent, length = 50)
 ```
+

@@ -48,8 +48,9 @@ zentutils <- function(data, genome = NA) {
 
   zu_obj <- new(
     "zu_obj",
-    regions = readr::read_tsv(data, col_names = c("chrom", "start", "end",
-                                                  "region_name", "score", "strand")) %>%
+    regions = read.delim(data, col.names = c("chrom", "start", "end",
+                                             "region_name", "score", "strand"),
+                         sep = "\t") %>%
       GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
 
   )
