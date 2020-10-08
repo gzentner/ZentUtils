@@ -5,7 +5,7 @@
 #' Generates a tile plot of sequences of interest wherein each base is represented
 #' by a specific color.
 #'
-#' @importFrom ggplot2 ggplot aes geom_tile scale_fill_manual theme theme_minimal element_blank
+#' @importFrom ggplot2 ggplot aes geom_tile scale_fill_manual theme theme_minimal element_blank scale_y_reverse
 #' @importFrom magrittr %>%
 #'
 #' @param zu_obj A ZentUtils object
@@ -61,6 +61,7 @@ color_map <- function(zu_obj, cols = NA) {
     geom_tile(aes(fill = .data$base)) +
     theme_minimal() +
     scale_fill_manual(values = base_cols) +
+    scale_y_reverse() +
     theme(
       axis.title = element_blank(),
       panel.grid = element_blank()
