@@ -20,14 +20,15 @@ transcription factor.
 
 ##### Import regions into ZentUtils
 
-```{r}
-zent <- zentutils(system.file("extdata", "homer_reb1_badis_motif_scan.bed", package = "ZentUtils"), genome = "sacCer3")
-
-head(zent@regions)
+```{r setup, include = F}
+knitr::opts_chunk$set(echo=TRUE)
 ```
 
-```{r}
+```{r asfd, eval = T}
+zent <- zentutils(system.file("extdata", "homer_reb1_badis_motif_scan.bed", package = "ZentUtils"), genome = "sacCer3")
 
+
+head(zent@regions)
 ```
 
 

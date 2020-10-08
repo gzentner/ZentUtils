@@ -1,6 +1,9 @@
 
 #' ZentUtils class definition
 #'
+#' @importFrom GenomicRanges GRanges
+#' @importFrom BioStrings DNAStringSet
+#'
 #' @slot regions A GRanges object containing imported regions.
 #' @slot expanded_regions A GRanges object containing expanded regions.
 #' @slot seqs A DNAStringSet object containing sequences of regions of interest.
@@ -15,7 +18,12 @@ setClass(
     regions = "GRanges",
     expanded_regions = "GRanges",
     seqs = "DNAStringSet"
-    )
+    ),
+  prototype = list(
+    regions = GRanges(),
+    expanded_regions = GRanges(),
+    seqs = DNAStringSet()
+  )
 )
 
 #' ZentUtils Constructor Function

@@ -1,0 +1,20 @@
+---
+title: "Color Map"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r import, eval = TRUE}
+library(ZentUtils)
+
+zent <- zentutils(system.file("extdata", "homer_reb1_badis_motif_scan.bed", package = "ZentUtils"), genome = "sacCer3")
+```
+
+```{r showgrange, eval = FALSE}
+zent@regions
+```
