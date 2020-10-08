@@ -58,15 +58,17 @@ zentutils <- function(data, genome = NA) {
   if (GenomeInfoDb::seqlevelsStyle(GenomeInfoDb::seqlevels(zu_obj@regions))[1] != "UCSC") {
       GenomeInfoDb::seqlevelsStyle(GenomeInfoDb::seqlevels(zu_obj@regions)) <- "UCSC" }
 
+  # Retrieve genome information from UCSC
+  genome_info <- plyranges::genome_info(genome = genome)
+
+  zu_obj@regions <- zu_obj@regions %>%
+    plyranges::set_genome_info(genome = genome,
+                               seqnames = genome_info@seqinfo@seqnames,
+                               seqlengths = genome_info@seqinfo@seqlengths,
+                               is_circular = genome_info@seqinfo@is_circular)
+
   # Remove any mitochondrial regions
   zu_obj@regions <- GenomeInfoDb::dropSeqlevels(zu_obj@regions, value = "chrM", pruning.mode = "coarse")
-
-  # Load list of chromosome length vectors
-  genome_list <- readRDS("data/seqlengths.rds")
-
-  # Add chromosome lengths and genome to GRanges object in the 'regions' slot of the new ZentUtils object
-  GenomeInfoDb::seqlengths(zu_obj@regions) <- as.vector(genome_list[[genome]])
-  GenomeInfoDb::genome(zu_obj@regions) <- genome
 
   return(zu_obj)
 }

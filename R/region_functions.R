@@ -23,7 +23,7 @@ sort_regions <- function(zu_obj, by = "coord", decreasing = FALSE) {
     stop("Input must be a ZentUtils object.")
 
   if(by == "coord") {
-    zu_obj@regions <- BiocGenerics::order(zu_obj@regions, decreasing = decreasing)
+    zu_obj@regions <- BiocGenerics::sort(zu_obj@regions, decreasing = decreasing)
   } else if (by == "score") {
     zu_obj@regions <- BiocGenerics::sort(zu_obj@regions, by = ~score, decreasing = decreasing)
   } else {
@@ -52,7 +52,6 @@ sort_regions <- function(zu_obj, by = "coord", decreasing = FALSE) {
 #' @export
 #'
 #' @examples
-#' genome <- BSgenome.Scerevisiae.UCSC.sacCer3
 #' zent <- expand_regions(zent, length = 50)
 
 expand_regions <- function(zu_obj, length = 100) {
@@ -100,7 +99,7 @@ get_seqs <- function(zu_obj, region_type = "expanded", genome) {
 
   zu_obj@seqs <- BSgenome::getSeq(genome, seq_regions)
 
-  #names(zu_obj@seqs) <- seq(1:length(zent@seqs))
+  names(zu_obj@seqs) <- seq(1:length(zent@seqs))
 
   return(zu_obj)
 

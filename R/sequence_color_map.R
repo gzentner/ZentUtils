@@ -30,6 +30,7 @@ color_map <- function(zu_obj, cols = NA) {
 
   # Generate long table of bases for plotting
   seq_length <- unique(stringr::str_length(zu_obj@seqs))
+
   seqs_split <- zu_obj@seqs %>%
     as.character %>%
     stringr::str_split(pattern = "", simplify = T) %>%
