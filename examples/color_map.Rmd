@@ -3,18 +3,22 @@ title: "Color Map"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## R Markdown
 
-```{r import, eval = TRUE}
+#### Load library and import data
+```{r import, message = FALSE}
 library(ZentUtils)
 
 zent <- zentutils(system.file("extdata", "homer_reb1_badis_motif_scan.bed", package = "ZentUtils"), genome = "sacCer3")
 ```
+  
+  
+We now have the regions of interest stored as a GRanges object in the "regions" slot of the ZentUtils object:
 
-```{r showgrange, eval = FALSE}
+```{r showgrange}
 zent@regions
 ```

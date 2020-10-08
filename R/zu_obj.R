@@ -2,7 +2,7 @@
 #' ZentUtils class definition
 #'
 #' @importFrom GenomicRanges GRanges
-#' @importFrom BioStrings DNAStringSet
+#' @importFrom Biostrings DNAStringSet
 #'
 #' @slot regions A GRanges object containing imported regions.
 #' @slot expanded_regions A GRanges object containing expanded regions.
@@ -14,7 +14,7 @@
 
 setClass(
   "zu_obj",
-  slots = c(
+  slots = list(
     regions = "GRanges",
     expanded_regions = "GRanges",
     seqs = "DNAStringSet"
@@ -56,9 +56,8 @@ zentutils <- function(data, genome = NA) {
 
   zu_obj <- new(
     "zu_obj",
-    regions = read.delim(data, col.names = c("chrom", "start", "end",
-                                             "region_name", "score", "strand"),
-                         sep = "\t") %>%
+    regions = readr::read_tsv(data, col_names = c("chrom", "start", "end",
+                                                  "region_name", "score", "strand")) %>%
       GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
 
   )

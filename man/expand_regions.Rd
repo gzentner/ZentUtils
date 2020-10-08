@@ -22,6 +22,5 @@ after expansion are removed.
 For region expansion, length/2 bases are added to both ends of the region.
 }
 \examples{
-genome <- BSgenome.Scerevisiae.UCSC.sacCer3
 zent <- expand_regions(zent, length = 50)
 }

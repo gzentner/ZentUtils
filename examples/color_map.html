@@ -368,11 +368,30 @@ summary {
 
 <div id="r-markdown" class="section level2">
 <h2>R Markdown</h2>
-<pre class="r"><code>library(methods)
-library(ZentUtils)
+<div id="load-library-and-import-data" class="section level4">
+<h4>Load library and import data</h4>
+<pre class="r"><code>library(ZentUtils)
 
 zent &lt;- zentutils(system.file(&quot;extdata&quot;, &quot;homer_reb1_badis_motif_scan.bed&quot;, package = &quot;ZentUtils&quot;), genome = &quot;sacCer3&quot;)</code></pre>
+<p>We now have the regions of interest stored as a GRanges object in the “regions” slot of the ZentUtils object:</p>
 <pre class="r"><code>zent@regions</code></pre>
+<pre><code>## GRanges object with 667 ranges and 2 metadata columns:
+##         seqnames        ranges strand | region_name     score
+##            &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;
+##     [1]     chrI       128-136      + |        Reb1   9.55048
+##     [2]     chrI       146-154      + |        Reb1  10.06130
+##     [3]     chrI       218-226      + |        Reb1   8.76202
+##     [4]     chrI   72794-72802      - |        Reb1   8.76202
+##     [5]     chrI   87164-87172      - |        Reb1  10.06130
+##     ...      ...           ...    ... .         ...       ...
+##   [663]   chrXVI 829198-829206      + |        Reb1   9.55048
+##   [664]   chrXVI 840592-840600      + |        Reb1   9.17599
+##   [665]   chrXVI 864803-864811      + |        Reb1   9.55048
+##   [666]   chrXVI 900033-900041      - |        Reb1  10.47528
+##   [667]   chrXVI 947932-947940      - |        Reb1   8.86584
+##   -------
+##   seqinfo: 16 sequences from sacCer3 genome</code></pre>
+</div>
 </div>
 
 
