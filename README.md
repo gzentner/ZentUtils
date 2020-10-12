@@ -42,7 +42,7 @@ in the ```expanded_regions``` slot of the ZentUtils object. Sequences that are o
 following expansion are discarded.
 
 ```R
-zent <- expand_regions(zent, length = 50)
+zent <- expand_regions(zent, length = 10)
 ```
 
 ##### Retrieve region sequences
