@@ -4,12 +4,12 @@
 \alias{expand_regions}
 \title{Expand Regions}
 \usage{
-expand_regions(zu_obj, length = 100)
+expand_regions(zu_obj, length = 25)
 }
 \arguments{
 \item{zu_obj}{A ZentUtils object.}
 
-\item{length}{Number of bases by which to expand the region.}
+\item{length}{Number of bp to add to both sides of each region.}
 }
 \value{
 A GRanges object in the 'expanded_regions' slot of the ZentUtils object.
@@ -17,9 +17,6 @@ A GRanges object in the 'expanded_regions' slot of the ZentUtils object.
 \description{
 Expands regions to a desired width. Sequences that are partially out-of-bounds
 after expansion are removed.
-}
-\details{
-For region expansion, length/2 bases are added to both ends of the region.
 }
 \examples{
 zent <- expand_regions(zent, length = 50)

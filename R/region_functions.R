@@ -4,6 +4,8 @@
 #' @description
 #' Sorts imported regions by chromosomal location or score.
 #'
+#' @importFrom plyranges anchor_center
+#'
 #' @param zu_obj A ZentUtils object.
 #' @param by Sort by chromosome + coordinates + start ("coord") or column 5
 #'           of the imported ranges (automatically named "score" upon import).
@@ -40,13 +42,9 @@ sort_regions <- function(zu_obj, by = "coord", decreasing = FALSE) {
 #' Expands regions to a desired width. Sequences that are partially out-of-bounds
 #' after expansion are removed.
 #'
-#' @importFrom GenomeInfoDb seqlengths
-#'
 #' @param zu_obj A ZentUtils object.
-#' @param length Number of bases by which to expand the region.
+#' @param length Number of bp to add to both sides of each region.
 #'
-#' @details
-#' For region expansion, length/2 bases are added to both ends of the region.
 #'
 #' @return A GRanges object in the 'expanded_regions' slot of the ZentUtils object.
 #' @export
@@ -54,11 +52,14 @@ sort_regions <- function(zu_obj, by = "coord", decreasing = FALSE) {
 #' @examples
 #' zent <- expand_regions(zent, length = 50)
 
-expand_regions <- function(zu_obj, length = 100) {
+expand_regions <- function(zu_obj, length = 10) {
 
-  # Expand regions. Note that 1 is subtracted from 'length' to account for 0-based coordinates
-
-  zu_obj@expanded_regions <- suppressWarnings(plyranges::stretch(zu_obj@regions, length - 1))
+  # Expand regions
+  zu_obj@expanded_regions <- suppressWarnings(
+    zu_obj@regions %>%
+    plyranges::anchor_center() %>%
+    plyranges::stretch(length * 2)
+  )
 
   # Trim out-of-bounds regions
   zu_obj@expanded_regions <- GenomicRanges::trim(zu_obj@expanded_regions)
@@ -70,6 +71,9 @@ expand_regions <- function(zu_obj, length = 100) {
   dropped_seq_n <- length(zu_obj@regions) - length(zu_obj@expanded_regions)
 
   message(paste(dropped_seq_n, "sequences were removed due to being out-of-bounds."))
+
+  # Store extension length as metadata for color map labeling
+  metadata(zu_obj@expanded_regions)$length <- length
 
   return(zu_obj)
 
