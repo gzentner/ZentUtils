@@ -10,7 +10,7 @@ get_seqs(zu_obj, region_type = "expanded", genome)
 \item{zu_obj}{A ZentTools object.}
 
 \item{region_type}{Whether to extract sequences from original regions
-("imported") or expanded regions ("exported").}
+("imported") or expanded regions ("expanded").}
 
 \item{genome}{A BSgenome object for the organism of interest.}
 }

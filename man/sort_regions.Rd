@@ -9,8 +9,8 @@ sort_regions(zu_obj, by = "coord", decreasing = FALSE)
 \arguments{
 \item{zu_obj}{A ZentUtils object.}
 
-\item{by}{Sort by chromosome + coordinates + start ("coord") or column 5
-of the imported ranges (automatically named "score" upon import).}
+\item{by}{Sort by chromosomal coordinates ("coord") or column 5 of the imported
+ranges (automatically named "score" upon import).}
 
 \item{decreasing}{Whether the GRanges object should be sorted in descending order.}
 }
@@ -22,5 +22,5 @@ A sorted GRanges object in the 'regions' slot of the ZentUtils object
 Sorts imported regions by chromosomal location or score.
 }
 \examples{
-zent <- sort_regions(zent, by = "coord", decreasing = FALSE)
+zent <- sort_regions(zent, by = "score", decreasing = TRUE)
 }

@@ -4,7 +4,7 @@
 \alias{expand_regions}
 \title{Expand Regions}
 \usage{
-expand_regions(zu_obj, length = 25)
+expand_regions(zu_obj, length = 10)
 }
 \arguments{
 \item{zu_obj}{A ZentUtils object.}

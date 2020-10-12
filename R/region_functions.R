@@ -7,8 +7,8 @@
 #' @importFrom plyranges anchor_center
 #'
 #' @param zu_obj A ZentUtils object.
-#' @param by Sort by chromosome + coordinates + start ("coord") or column 5
-#'           of the imported ranges (automatically named "score" upon import).
+#' @param by Sort by chromosomal coordinates ("coord") or column 5 of the imported
+#'          ranges (automatically named "score" upon import).
 #' @param decreasing Whether the GRanges object should be sorted in descending order.
 #'
 #' @return A sorted GRanges object in the 'regions' slot of the ZentUtils object
@@ -16,7 +16,7 @@
 #' @export
 #'
 #' @examples
-#' zent <- sort_regions(zent, by = "coord", decreasing = FALSE)
+#' zent <- sort_regions(zent, by = "score", decreasing = TRUE)
 
 sort_regions <- function(zu_obj, by = "coord", decreasing = FALSE) {
 
@@ -50,7 +50,7 @@ sort_regions <- function(zu_obj, by = "coord", decreasing = FALSE) {
 #' @export
 #'
 #' @examples
-#' zent <- expand_regions(zent, length = 50)
+#' zent <- expand_regions(zent, length = 10)
 
 expand_regions <- function(zu_obj, length = 10) {
 
@@ -86,7 +86,7 @@ expand_regions <- function(zu_obj, length = 10) {
 #'
 #' @param zu_obj A ZentTools object.
 #' @param region_type Whether to extract sequences from original regions
-#'                    ("imported") or expanded regions ("exported").
+#'                    ("imported") or expanded regions ("expanded").
 #' @param genome A BSgenome object for the organism of interest.
 #'
 #' @return A DNAStringSet object in the 'seqs' slot of the ZentUtils object.
