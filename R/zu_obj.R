@@ -36,6 +36,7 @@ setClass(
 #'
 #' @param data A BED file containing the regions of interest.
 #' @param genome Identifier for the genome from which the regions were derived.
+#' @param mito_chr Seqname of mitochondrial chromosome.
 #'
 #' @details
 #' \itemize{
@@ -51,14 +52,17 @@ setClass(
 #' @examples
 #' zent <- zentutils(system.file("extdata", "homer_reb1_badis_motif_scan.bed", package = "ZentUtils"), genome = "sacCer3")
 
-zentutils <- function(data, genome = NA) {
+zentutils <- function(data, genome = NA, mito_chr = "chrM") {
 
+  # Read in data.
+  bed <- data %>%
+    read_tsv(col_names = c("chrom", "start", "end", "region_name", "score", "strand")) %>%
+    plyranges::as_granges()
+
+  # Create a new zu_obj.
   zu_obj <- new(
     "zu_obj",
-    regions = readr::read_tsv(data, col_names = c("chrom", "start", "end",
-                                                  "region_name", "score", "strand")) %>%
-      GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
-
+    regions = bed
   )
 
   # If necessary, add "chr" prefix to ENSEMBL or NCBI chromosome names
@@ -75,7 +79,7 @@ zentutils <- function(data, genome = NA) {
                                is_circular = genome_info@seqinfo@is_circular)
 
   # Remove any mitochondrial regions
-  zu_obj@regions <- GenomeInfoDb::dropSeqlevels(zu_obj@regions, value = "chrM", pruning.mode = "coarse")
+  zu_obj@regions <- GenomeInfoDb::dropSeqlevels(zu_obj@regions, value = mito_chr, pruning.mode = "coarse")
 
   return(zu_obj)
 }

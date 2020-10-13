@@ -19,5 +19,5 @@ Expands regions to a desired width. Sequences that are partially out-of-bounds
 after expansion are removed.
 }
 \examples{
-zent <- expand_regions(zent, length = 50)
+zent <- expand_regions(zent, length = 10)
 }

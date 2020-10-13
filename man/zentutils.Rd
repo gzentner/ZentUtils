@@ -4,12 +4,14 @@
 \alias{zentutils}
 \title{ZentUtils Constructor Function}
 \usage{
-zentutils(data, genome = NA)
+zentutils(data, genome = NA, mito_chr = "chrM")
 }
 \arguments{
 \item{data}{A BED file containing the regions of interest.}
 
 \item{genome}{Identifier for the genome from which the regions were derived.}
+
+\item{mito_chr}{Seqname of mitochondrial chromosome.}
 }
 \value{
 A new ZentUtils object with a GRanges object in the 'regions' slot.
