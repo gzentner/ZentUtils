@@ -24,13 +24,13 @@ sort_regions <- function(zu_obj, by = "coord", decreasing = FALSE) {
   if (!is(zu_obj, "zu_obj"))
     stop("Input must be a ZentUtils object.")
 
-  if(by == "coord") {
-    zu_obj@regions <- BiocGenerics::sort(zu_obj@regions, decreasing = decreasing)
-  } else if (by == "score") {
-    zu_obj@regions <- BiocGenerics::sort(zu_obj@regions, by = ~score, decreasing = decreasing)
-  } else {
-    stop("Regions must be sorted by 'coord' or 'score'.")
-  }
+  by <- match.arg(stringr::str_to_lower(by), choices=c("coord", "score"))
+
+  # Sort
+  zu_obj@regions <- switch(by,
+    "coord"=BiocGenerics::sort(zu_obj@regions, decreasing = decreasing),
+    "score"=BiocGenerics::sort(zu_obj@regions, by = ~score, decreasing = decreasing)
+  )
 
   return(zu_obj)
 
@@ -53,6 +53,12 @@ sort_regions <- function(zu_obj, by = "coord", decreasing = FALSE) {
 #' zent <- expand_regions(zent, length = 10)
 
 expand_regions <- function(zu_obj, length = 10) {
+
+  # Input checks
+  if (!is(zu_obj, "zu_obj")) stop("zu_obj must be a 'zu_obj'")
+  if (!is(length, "numeric") || length < 1 || length %% 1 != 0) {
+    stop("length must be a positive integer greater than or equal to 1")
+  }
 
   # Expand regions
   zu_obj@expanded_regions <- suppressWarnings(
@@ -98,12 +104,22 @@ expand_regions <- function(zu_obj, length = 10) {
 
 get_seqs <- function(zu_obj, region_type = "expanded", genome) {
 
-  if(region_type == "imported") {seq_regions <- zu_obj@regions}
-  if(region_type == "expanded") {seq_regions <- zu_obj@expanded_regions}
+  # Input checks.
+  if (!is(zu_obj, "zu_obj")) stop("zu_obj must be a 'zu_obj'")
+  region_type <- match_arg(
+    stringr::str_to_lower(region_type),
+    choices=c("imported", "expanded")
+  )
 
+  # Extract proper regions.
+  seq_regions <- switch(region_type,
+    "imported"=zu_obj@regions,
+    "expanded"=zu_obj@expanded_regions
+  )
+
+  # Retrieve the sequences.
   zu_obj@seqs <- BSgenome::getSeq(genome, seq_regions)
-
-  names(zu_obj@seqs) <- seq(1:length(zent@seqs))
+  names(zu_obj@seqs) <- seq_len(length(zent@seqs))
 
   return(zu_obj)
 

@@ -21,10 +21,9 @@
 color_map <- function(zu_obj, cols = NA) {
 
   # Input check
-  if (!is(zu_obj, "zu_obj"))
-    stop("input must be a ZentUtils object")
+  if (!is(zu_obj, "zu_obj")) stop("input must be a ZentUtils object")
 
-  if (length(cols) != 4 && !is.na(cols)) {
+  if (!is.na(cols) && (length(cols) != 4 | !is(cols, "character"))) {
     stop("cols must be NA or a character vector of length 4")
   }
 
@@ -33,22 +32,22 @@ color_map <- function(zu_obj, cols = NA) {
 
   seqs_split <- zu_obj@seqs %>%
     as.character %>%
-    stringr::str_split(pattern = "", simplify = T) %>%
+    stringr::str_split(pattern = "", simplify = TRUE) %>%
     as.data.frame %>%
     magrittr::set_names(1:seq_length) %>%
     tibble::rowid_to_column(var = "sequence") %>%
-    tidyr::pivot_longer(-sequence, names_to = "position", values_to = "base") %>%
+    tidyr::pivot_longer(!sequence, names_to = "position", values_to = "base") %>%
     dplyr::mutate(position = as.integer(position))
 
-  ifelse(
+  base_cols <- ifelse(
     is.na(cols),
-    base_cols <- c(
+    c(
       "A" = "#109649",
       "C" = "#255C99",
       "G" = "#F7B32C",
       "T" = "#D62839"
     ),
-    base_cols <- c(
+    c(
       "A" = cols[1],
       "C" = cols[2],
       "G" = cols[3],
@@ -56,7 +55,7 @@ color_map <- function(zu_obj, cols = NA) {
     )
   )
 
-  # Store extension legnth as a variable for labeling
+  # Store extension length as a variable for labeling
   length <- zu_obj@expanded_regions@metadata$length
 
   # Generate color plot
