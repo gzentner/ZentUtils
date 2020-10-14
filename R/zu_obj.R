@@ -50,13 +50,13 @@ setClass(
 #' @export
 #'
 #' @examples
-#' zent <- zentutils(system.file("extdata", "homer_reb1_badis_motif_scan.bed", package = "ZentUtils"), genome = "sacCer3")
+#' zent <- zentutils(system.file("extdata", "homer_reb1_badis_motif_scan.bed", package = "ZentUtils"), genome = "sacCer3", mito_chr = "chrM")
 
 zentutils <- function(data, genome = NA, mito_chr = "chrM") {
 
   # Read in data.
   bed <- data %>%
-    read_tsv(col_names = c("chrom", "start", "end", "region_name", "score", "strand")) %>%
+    readr::read_tsv(col_names = c("seqnames", "start", "end", "region_name", "score", "strand")) %>%
     plyranges::as_granges()
 
   # Create a new zu_obj.
@@ -68,6 +68,9 @@ zentutils <- function(data, genome = NA, mito_chr = "chrM") {
   # If necessary, add "chr" prefix to ENSEMBL or NCBI chromosome names
   if (GenomeInfoDb::seqlevelsStyle(GenomeInfoDb::seqlevels(zu_obj@regions))[1] != "UCSC") {
       GenomeInfoDb::seqlevelsStyle(GenomeInfoDb::seqlevels(zu_obj@regions)) <- "UCSC" }
+
+  # Sort seqlevels to ensure compatibility with seqinfo
+  zu_obj@regions <- GenomeInfoDb::sortSeqlevels(zu_obj@regions)
 
   # Retrieve genome information from UCSC
   genome_info <- plyranges::genome_info(genome = genome)

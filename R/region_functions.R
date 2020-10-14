@@ -28,8 +28,8 @@ sort_regions <- function(zu_obj, by = "coord", decreasing = FALSE) {
 
   # Sort
   zu_obj@regions <- switch(by,
-    "coord"=BiocGenerics::sort(zu_obj@regions, decreasing = decreasing),
-    "score"=BiocGenerics::sort(zu_obj@regions, by = ~score, decreasing = decreasing)
+    "coord" = BiocGenerics::sort(zu_obj@regions, decreasing = decreasing),
+    "score" = BiocGenerics::sort(zu_obj@regions, by = ~score, decreasing = decreasing)
   )
 
   return(zu_obj)

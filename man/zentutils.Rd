@@ -29,5 +29,5 @@ end coordinates in columns 1-3 and strand in column 6.}
 }
 }
 \examples{
-zent <- zentutils(system.file("extdata", "homer_reb1_badis_motif_scan.bed", package = "ZentUtils"), genome = "sacCer3")
+zent <- zentutils(system.file("extdata", "homer_reb1_badis_motif_scan.bed", package = "ZentUtils"), genome = "sacCer3", mito_chr = "chrM")
 }
