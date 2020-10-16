@@ -28,6 +28,7 @@ Imports:
     tibble,
     GenomicRanges,
     BiocGenerics,
-    readr
+    readr,
+    assertthat
 Depends: 
     R (>= 2.10)

@@ -24,7 +24,7 @@ an imported BED file.
 \itemize{
 \item{The BED file should contain 6 columns, with chromosome, start, and
 end coordinates in columns 1-3 and strand in column 6.}
-\item{BED columns names are converted to "chrom", "start", "end",
+\item{BED columns names are converted to "seqnames", "start", "end",
 "region_name", "score", and "strand" upon import.}
 }
 }

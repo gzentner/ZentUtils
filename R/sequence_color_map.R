@@ -20,12 +20,11 @@
 
 color_map <- function(zu_obj, cols = NA) {
 
-  # Input check
-  if (!is(zu_obj, "zu_obj")) stop("input must be a ZentUtils object")
+  # Input checks
+  assert_that(is(zu_obj, "zu_obj"), msg = "zu_obj must be a ZentUtils object.")
 
-  if (!is.na(cols) && (length(cols) != 4 | !is(cols, "character"))) {
-    stop("cols must be NA or a character vector of length 4")
-  }
+  assert_that(all(is.na(cols)) || length(cols) == 4 && is.character(cols),
+              msg = "cols must be NA or a character vector of length 4")
 
   # Generate long table of bases for plotting
   seq_length <- unique(zent@seqs@ranges@width)
@@ -39,21 +38,20 @@ color_map <- function(zu_obj, cols = NA) {
     tidyr::pivot_longer(!sequence, names_to = "position", values_to = "base") %>%
     dplyr::mutate(position = as.integer(position))
 
-  base_cols <- ifelse(
+  ifelse(
     is.na(cols),
-    c(
+    base_cols <- c(
       "A" = "#109649",
       "C" = "#255C99",
       "G" = "#F7B32C",
-      "T" = "#D62839"
-    ),
-    c(
+      "T" = "#D62839"),
+    base_cols <- c(
       "A" = cols[1],
       "C" = cols[2],
       "G" = cols[3],
       "T" = cols[4]
-    )
   )
+)
 
   # Store extension length as a variable for labeling
   length <- zu_obj@expanded_regions@metadata$length
