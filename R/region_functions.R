@@ -106,11 +106,12 @@ get_seqs <- function(zu_obj, region_type = "expanded", genome) {
 
   # Input checks.
   assert_that(is(zu_obj, "zu_obj"), msg = "zu_obj must be a ZentUtils object.")
+
   assert_that(is(genome, "BSgenome"), msg = "genome must be a BSgenome object.")
 
   region_type <- match.arg(
     stringr::str_to_lower(region_type),
-    choices=c("imported", "expanded")
+    choices = c("imported", "expanded")
   )
 
   # Extract proper regions.
