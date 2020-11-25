@@ -21,9 +21,9 @@
 sort_regions <- function(zu_obj, by = "coord", decreasing = FALSE) {
 
   # Input checks
-  assert_that(is(zu_obj, "zu_obj"), msg = "zu_obj must be a ZentUtils object.")
+  assertthat::assert_that(is(zu_obj, "zu_obj"), msg = "zu_obj must be a ZentUtils object.")
 
-  assert_that(is.flag(decreasing))
+  assertthat::assert_that(assertthat::is.flag(decreasing))
 
   by <- match.arg(stringr::str_to_lower(by), choices = c("coord", "score"))
 
@@ -56,9 +56,9 @@ sort_regions <- function(zu_obj, by = "coord", decreasing = FALSE) {
 expand_regions <- function(zu_obj, length = 10) {
 
   # Input checks
-  assert_that(is(zu_obj, "zu_obj"), msg = "Input must be a ZentUtils object.")
+  assertthat::assert_that(is(zu_obj, "zu_obj"), msg = "Input must be a ZentUtils object.")
 
-  assert_that(is.count(length))
+  assertthat::assert_that(assertthat::is.count(length))
 
   # Expand regions
   zu_obj@expanded_regions <- suppressWarnings(
@@ -105,9 +105,9 @@ expand_regions <- function(zu_obj, length = 10) {
 get_seqs <- function(zu_obj, region_type = "expanded", genome) {
 
   # Input checks.
-  assert_that(is(zu_obj, "zu_obj"), msg = "zu_obj must be a ZentUtils object.")
+  assertthat::assert_that(is(zu_obj, "zu_obj"), msg = "zu_obj must be a ZentUtils object.")
 
-  assert_that(is(genome, "BSgenome"), msg = "genome must be a BSgenome object.")
+  assertthat::assert_that(is(genome, "BSgenome"), msg = "genome must be a BSgenome object.")
 
   region_type <- match.arg(
     stringr::str_to_lower(region_type),
@@ -122,7 +122,7 @@ get_seqs <- function(zu_obj, region_type = "expanded", genome) {
 
   # Retrieve the sequences.
   zu_obj@seqs <- BSgenome::getSeq(genome, seq_regions)
-  names(zu_obj@seqs) <- seq_len(length(zent@seqs))
+  names(zu_obj@seqs) <- seq_len(length(zu_obj@seqs))
 
   return(zu_obj)
 

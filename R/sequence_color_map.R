@@ -21,9 +21,9 @@
 color_map <- function(zu_obj, cols = NA) {
 
   # Input checks
-  assert_that(is(zu_obj, "zu_obj"), msg = "zu_obj must be a ZentUtils object.")
+  assertthat::assert_that(is(zu_obj, "zu_obj"), msg = "zu_obj must be a ZentUtils object.")
 
-  assert_that(all(is.na(cols)) || length(cols) == 4 && is.character(cols),
+  assertthat::assert_that(all(is.na(cols)) || length(cols) == 4 && is.character(cols),
               msg = "cols must be NA or a character vector of length 4")
 
   # Generate long table of bases for plotting
@@ -50,7 +50,7 @@ color_map <- function(zu_obj, cols = NA) {
       "C" = cols[2],
       "G" = cols[3],
       "T" = cols[4]
-  )
+      )
 )
 
   # Store extension length as a variable for labeling
