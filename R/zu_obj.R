@@ -50,7 +50,9 @@ setClass(
 #' @export
 #'
 #' @examples
-#' zent <- zentutils(system.file("extdata", "homer_reb1_badis_motif_scan.bed", package = "ZentUtils"), genome = "sacCer3", mito_chr = "chrM")
+#' zent <- zentutils(system.file("extdata", "homer_reb1_badis_motif_scan.bed",
+#'                               package = "ZentUtils"), genome = "sacCer3",
+#'                               mito_chr = "chrM")
 
 zentutils <- function(data, genome = NA, mito_chr = "chrM") {
 

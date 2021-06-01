@@ -27,7 +27,7 @@ color_map <- function(zu_obj, cols = NA) {
               msg = "cols must be NA or a character vector of length 4")
 
   # Generate long table of bases for plotting
-  seq_length <- unique(zent@seqs@ranges@width)
+  seq_length <- unique(zu_obj@seqs@ranges@width)
 
   seqs_split <- zu_obj@seqs %>%
     as.character %>%
