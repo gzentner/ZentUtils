@@ -37,7 +37,7 @@ zent <- sort_regions(zent, by = "score", decreasing = TRUE)
 
 ##### Expand regions
 We then optionally expand the regions of interest to a specified size. For expansion,
-```length/2``` bases are added to both ends of each region. Expanded regions are stored
+```length``` bases are added to both ends of each region. Expanded regions are stored
 in the ```expanded_regions``` slot of the ZentUtils object. Sequences that are out-of-bounds
 following expansion are discarded.
 
