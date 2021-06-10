@@ -1,0 +1,43 @@
+Bootstrap: docker
+From: continuumio/miniconda3
+
+%post
+
+# Enable conda
+
+. /opt/conda/etc/profile.d/conda.sh
+
+# Update conda
+
+conda update -n base -y -c defaults conda
+
+# Install mamba
+
+conda install -n base -y -c conda-forge mamba
+
+# Install required software
+
+mamba create -n ZentUtils -y -c conda-forge -c bioconda \
+r-base r-devtools r-tidyverse \
+bioconductor-biostrings bioconductor-bsgenome \
+bioconductor-bsgenome.scerevisiae.ucsc.saccer3 \
+bioconductor-genomicranges bioconductor-plyranges
+
+# Update software 
+
+mamba update -n ZentUtils -y -c conda-forge -c bioconda --all
+
+mamba clean -y --all
+
+# Install ZentUtils
+
+export PATH=/opt/conda/envs/ZentUtils/bin/:$PATH
+
+apt-get -y update
+apt-get -y install build-essential zlib1g-dev
+
+R --no-echo -e "Sys.setenv(TAR='/bin/tar'); devtools::install_github('gzentner/ZentUtils',ref='master')"
+
+%environment
+
+export PATH=/opt/conda/envs/ZentUtils/bin/:$PATH
